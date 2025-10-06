@@ -21,7 +21,8 @@ export function LoginScreen() {
             <FormLogin/>
 
             <Text style={styles.termos}>
-                Ao continuar, você concorda com nossos Termos de Uso
+                {/*TODO: arrumar para ser um link*/}
+                Ao continuar, você concorda com nossos <Text style={styles.falsoLink}>Termos de Uso</Text>
             </Text>
         </View>
     );
@@ -55,6 +56,7 @@ const styles = StyleSheet.create({
     descricao: {
         fontSize: 13,
         textAlign: "center",
+        color: "#666",
     },
     termos: {
         marginTop: 20,
@@ -62,4 +64,9 @@ const styles = StyleSheet.create({
         color: "gray",
         textAlign: "center",
     },
+    falsoLink: {
+        fontSize: 12,
+        color: 'purple',
+        fontWeight: "bold",
+    }
 });

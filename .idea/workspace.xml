@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9667358f-57c3-4987-8931-dacdf3640e11" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/pages/LoginScreen.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/auth/FormLogin.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="9667358f-57c3-4987-8931-dacdf3640e11" name="Changes" comment="chore: add zod">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/pages/LoginScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/pages/LoginScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/auth/FormLogin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/auth/FormLogin.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,11 +79,34 @@
       <updated>1759708146531</updated>
       <workItem from="1759708147942" duration="848000" />
       <workItem from="1759709011357" duration="15000" />
-      <workItem from="1759709041092" duration="4121000" />
+      <workItem from="1759709041092" duration="7618000" />
     </task>
+    <task id="LOCAL-00001" summary="feat: iniciando a tela de login">
+      <option name="closed" value="true" />
+      <created>1759713226306</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1759713226306</updated>
+    </task>
+    <task id="LOCAL-00002" summary="chore: add zod">
+      <option name="closed" value="true" />
+      <created>1759713279643</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1759713279643</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <MESSAGE value="feat: iniciando a tela de login" />
+    <MESSAGE value="chore: add zod" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: add zod" />
   </component>
 </project>
