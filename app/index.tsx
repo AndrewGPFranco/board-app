@@ -1,23 +1,12 @@
-import {View, Text, StyleSheet} from 'react-native';
+import {LoginScreen} from "@/app/pages/LoginScreen";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
 
-export default function Home() {
+const Stack = createNativeStackNavigator();
+
+export default function App() {
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Olá APP</Text>
-            <Text>Funcionou!</Text>
-        </View>
+        <Stack.Navigator initialRouteName="Login">
+            <Stack.Screen name="Login" options={{headerShown: false}} component={LoginScreen}/>
+        </Stack.Navigator>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#fff',
-    },
-    title: {
-        fontSize: 32,
-        fontWeight: 'bold',
-    },
-});
