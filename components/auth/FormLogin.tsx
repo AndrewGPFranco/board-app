@@ -25,9 +25,28 @@ export function FormLogin() {
     return (
         <View style={styles.container}>
             <Portal>
-                <Dialog visible={visible} onDismiss={hideDialog}>
-                    <Dialog.Content>
-                        <Text>{mensagemLogin}</Text>
+                <Dialog
+                    visible={visible}
+                    onDismiss={hideDialog}
+                    style={{
+                        backgroundColor: '#707070',
+                        borderRadius: 12,
+                    }}
+                >
+                    <Dialog.Content
+                        style={{
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontSize: 18,
+                                color: 'white',
+                                textAlign: 'center',
+                            }}
+                        >
+                            {mensagemLogin}
+                        </Text>
                     </Dialog.Content>
                 </Dialog>
             </Portal>
@@ -44,6 +63,7 @@ export function FormLogin() {
                     placeholder="Digite seu e-mail"
                     keyboardType="email-address"
                     autoCapitalize="none"
+                    autoComplete="off"
                 />
             </View>
 
@@ -55,6 +75,7 @@ export function FormLogin() {
                     onChangeText={setPassword}
                     value={password}
                     placeholder="Digite sua senha"
+                    autoComplete="off"
                 />
             </View>
 

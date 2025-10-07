@@ -1,30 +1,38 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import {View, StyleSheet, Text} from "react-native";
+import {View, StyleSheet, Text, KeyboardAvoidingView, Platform, ScrollView} from "react-native";
 import {FormLogin} from "@/components/auth/FormLogin";
 
 export default function LoginScreen() {
     return (
-        <View style={styles.container}>
-            <View style={styles.containerIcons}>
-                <Ionicons name="videocam-outline" size={32} color="purple" style={styles.icon}/>
-                <Ionicons name="book-outline" size={32} color="purple" style={styles.icon}/>
-                <Ionicons name="barcode-outline" size={32} color="purple"/>
-            </View>
+        <KeyboardAvoidingView
+            style={styles.container}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
+            <ScrollView
+                contentContainerStyle={styles.scrollContent}
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator={false}
+            >
+                <View style={styles.containerIcons}>
+                    <Ionicons name="videocam-outline" size={32} color="purple" style={styles.icon}/>
+                    <Ionicons name="book-outline" size={32} color="purple" style={styles.icon}/>
+                    <Ionicons name="barcode-outline" size={32} color="purple"/>
+                </View>
 
-            <View style={styles.containerInfos}>
-                <Text style={styles.titulo}>Gerenciador de mídias</Text>
-                <Text style={styles.descricao}>
-                    Acompanhe seu progresso em filmes, séries, livros e animes
+                <View style={styles.containerInfos}>
+                    <Text style={styles.titulo}>Gerenciador de mídias</Text>
+                    <Text style={styles.descricao}>
+                        Acompanhe seu progresso em filmes, séries, livros e animes
+                    </Text>
+                </View>
+
+                <FormLogin/>
+
+                <Text style={styles.termos}>
+                    Ao continuar, você concorda com nossos <Text style={styles.falsoLink}>Termos de Uso</Text>
                 </Text>
-            </View>
-
-            <FormLogin/>
-
-            <Text style={styles.termos}>
-                {/*TODO: arrumar para ser um link*/}
-                Ao continuar, você concorda com nossos <Text style={styles.falsoLink}>Termos de Uso</Text>
-            </Text>
-        </View>
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
 }
 
@@ -68,5 +76,10 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: 'purple',
         fontWeight: "bold",
-    }
+    },
+    scrollContent: {
+        flexGrow: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 });
