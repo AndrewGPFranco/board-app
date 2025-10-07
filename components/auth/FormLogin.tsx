@@ -1,3 +1,4 @@
+import {z} from "zod";
 import React, {useState} from "react";
 import {Router, useRouter} from "expo-router";
 import useAuthStore from "@/stores/authStore";
@@ -16,7 +17,20 @@ export function FormLogin() {
     const authStore: IAuthStore = useAuthStore();
     const hideDialog: () => void = () => setVisible(false);
 
+    const schema = z.object({
+        email: z.string().email("O email é obrigatório!"),
+        password: z.string().min(8, "A senha precisa ter no mínimo 8 caracteres"),
+    })
+
     const realizarLogin = async (): Promise<void> => {
+        const validation = schema.safeParse({email, password});
+
+        if (validation.error) {
+            setMensagemLogin(String(validation.error.errors.at(0)?.message));
+            setVisible(true);
+            return;
+        }
+
         const response: ResponseAPI<string> = await authStore.efetuarLogin(email, password);
 
         if (response.getError()) {
