@@ -1,16 +1,37 @@
-import {useState} from "react";
-import {Text, TextInput, View, StyleSheet, Alert, TouchableOpacity} from "react-native";
+import React, {useState} from "react";
+import useAuthStore from "@/stores/authStore";
+import {Dialog, Portal} from "react-native-paper";
+import ResponseAPI from "@/stores/types/ResponseAPI";
+import {Text, TextInput, View, StyleSheet, TouchableOpacity} from "react-native";
 
 export function FormLogin() {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [visible, setVisible] = React.useState<boolean>(false);
+    const [mensagemLogin, setMensagemLogin] = React.useState<string>("");
 
-    const realizarLogin = () => {
-        Alert.alert(`${email} ${password}`);
+    const authStore = useAuthStore();
+    const hideDialog = () => setVisible(false);
+
+    const realizarLogin = async (): Promise<void> => {
+        const response: ResponseAPI<string> = await authStore.efetuarLogin(email, password);
+
+        if (response.getError()) {
+            setMensagemLogin(String(response.getResponse()));
+            setVisible(true);
+        }
     }
 
     return (
         <View style={styles.container}>
+            <Portal>
+                <Dialog visible={visible} onDismiss={hideDialog}>
+                    <Dialog.Content>
+                        <Text>{mensagemLogin}</Text>
+                    </Dialog.Content>
+                </Dialog>
+            </Portal>
+
             <Text style={styles.boasVindas}>Bem-vindo de volta</Text>
             <Text style={styles.descricao}>Entre com sua conta para continuar</Text>
 

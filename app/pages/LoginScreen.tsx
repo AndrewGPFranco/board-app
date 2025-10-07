@@ -2,7 +2,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import {View, StyleSheet, Text} from "react-native";
 import {FormLogin} from "@/components/auth/FormLogin";
 
-export function LoginScreen() {
+export default function LoginScreen() {
     return (
         <View style={styles.container}>
             <View style={styles.containerIcons}>

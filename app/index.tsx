@@ -1,12 +1,19 @@
-import {LoginScreen} from "@/app/pages/LoginScreen";
+import {PaperProvider} from "react-native-paper";
+import LoginScreen from "@/app/pages/LoginScreen";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
     return (
-        <Stack.Navigator initialRouteName="Login">
-            <Stack.Screen name="Login" options={{headerShown: false}} component={LoginScreen}/>
-        </Stack.Navigator>
+        <PaperProvider>
+            <Stack.Navigator initialRouteName="Login">
+                <Stack.Screen
+                    name="Login"
+                    component={LoginScreen}
+                    options={{headerShown: false}}
+                />
+            </Stack.Navigator>
+        </PaperProvider>
     );
 }
