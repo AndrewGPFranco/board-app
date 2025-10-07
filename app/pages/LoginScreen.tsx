@@ -1,8 +1,16 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import {View, StyleSheet, Text, KeyboardAvoidingView, Platform, ScrollView} from "react-native";
 import {FormLogin} from "@/components/auth/FormLogin";
+import {View, StyleSheet, Text, KeyboardAvoidingView, Platform, ScrollView, Linking} from "react-native";
 
 export default function LoginScreen() {
+
+    /**
+     * Inicialmente será um link para meu linkedin, mas mais para frente poderá ser uma página ou um modal.
+     */
+    const abreRotaTermosUso = async () => {
+        await Linking.openURL("https://github.com/AndrewGPFranco")
+    }
+
     return (
         <KeyboardAvoidingView
             style={styles.container}
@@ -28,7 +36,7 @@ export default function LoginScreen() {
 
                 <FormLogin/>
 
-                <Text style={styles.termos}>
+                <Text style={styles.termos} onPress={abreRotaTermosUso}>
                     Ao continuar, você concorda com nossos <Text style={styles.falsoLink}>Termos de Uso</Text>
                 </Text>
             </ScrollView>

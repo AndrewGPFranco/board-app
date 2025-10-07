@@ -103,8 +103,10 @@ export function FormLogin() {
                 <Text style={styles.btnText}>Entrar</Text>
             </TouchableOpacity>
 
-            {/*TODO: arrumar para ser um link*/}
-            <Text style={styles.aviso}>Não tem uma conta? <Text style={styles.falsoLink}>Cadastre-se</Text></Text>
+            <Text style={styles.aviso}>Não tem uma conta? <Text
+                onPress={() => router.push("/pages/UserRegisterScreen")}
+                style={styles.falsoLink}>Cadastre-se</Text>
+            </Text>
         </View>
     );
 }
