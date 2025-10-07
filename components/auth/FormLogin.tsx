@@ -1,7 +1,8 @@
-import {useRouter} from "expo-router";
 import React, {useState} from "react";
+import {Router, useRouter} from "expo-router";
 import useAuthStore from "@/stores/authStore";
 import {Dialog, Portal} from "react-native-paper";
+import IAuthStore from "@/stores/types/IAuthStore";
 import ResponseAPI from "@/stores/types/ResponseAPI";
 import {Text, TextInput, View, StyleSheet, TouchableOpacity} from "react-native";
 
@@ -11,9 +12,9 @@ export function FormLogin() {
     const [visible, setVisible] = React.useState<boolean>(false);
     const [mensagemLogin, setMensagemLogin] = React.useState<string>("");
 
-    const router = useRouter();
-    const authStore = useAuthStore();
-    const hideDialog = () => setVisible(false);
+    const router: Router = useRouter();
+    const authStore: IAuthStore = useAuthStore();
+    const hideDialog: () => void = () => setVisible(false);
 
     const realizarLogin = async (): Promise<void> => {
         const response: ResponseAPI<string> = await authStore.efetuarLogin(email, password);
