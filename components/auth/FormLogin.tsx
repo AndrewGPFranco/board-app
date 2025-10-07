@@ -1,3 +1,4 @@
+import {useRouter} from "expo-router";
 import React, {useState} from "react";
 import useAuthStore from "@/stores/authStore";
 import {Dialog, Portal} from "react-native-paper";
@@ -10,6 +11,7 @@ export function FormLogin() {
     const [visible, setVisible] = React.useState<boolean>(false);
     const [mensagemLogin, setMensagemLogin] = React.useState<string>("");
 
+    const router = useRouter();
     const authStore = useAuthStore();
     const hideDialog = () => setVisible(false);
 
@@ -19,7 +21,10 @@ export function FormLogin() {
         if (response.getError()) {
             setMensagemLogin(String(response.getResponse()));
             setVisible(true);
+            return;
         }
+
+        router.replace("/pages/HomeScreen");
     }
 
     return (

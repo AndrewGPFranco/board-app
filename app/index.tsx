@@ -1,3 +1,4 @@
+import HomeScreen from "@/app/pages/HomeScreen";
 import {PaperProvider} from "react-native-paper";
 import LoginScreen from "@/app/pages/LoginScreen";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
@@ -11,6 +12,11 @@ export default function App() {
                 <Stack.Screen
                     name="Login"
                     component={LoginScreen}
+                    options={{headerShown: false}}
+                />
+                <Stack.Screen
+                    name="Home"
+                    component={HomeScreen}
                     options={{headerShown: false}}
                 />
             </Stack.Navigator>
