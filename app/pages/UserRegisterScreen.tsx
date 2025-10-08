@@ -1,6 +1,6 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import {FormRegister} from "@/components/auth/FormRegister";
-import {KeyboardAvoidingView, Platform, StyleSheet, Text, View} from "react-native";
+import {KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View} from "react-native";
 
 export default function UserRegisterScreen() {
     return (
@@ -8,7 +8,11 @@ export default function UserRegisterScreen() {
             style={styles.container}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
-            <View style={styles.container}>
+            <ScrollView
+                contentContainerStyle={styles.scrollContent}
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator={false}
+            >
                 <View style={styles.containerInicio}>
                     <View style={styles.containerIcon}>
                         <Ionicons name="person-add" size={32} color="white"/>
@@ -22,7 +26,7 @@ export default function UserRegisterScreen() {
                 <Text style={styles.textoRodape}>
                     Ao criar uma conta, você concorda com nossos Termos de Uso e Política de Privacidade
                 </Text>
-            </View>
+            </ScrollView>
         </KeyboardAvoidingView>
     )
 }
@@ -30,31 +34,47 @@ export default function UserRegisterScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        paddingHorizontal: 5,
+        justifyContent:
+            "center",
+        alignItems:
+            "center",
+        paddingHorizontal:
+            5,
+    },
+    scrollContent: {
+        flexGrow: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     containerInicio: {
         alignItems: "center",
-        gap: 5
+        gap:
+            5
     },
     containerIcon: {
         backgroundColor: "purple",
-        width: "15%",
-        padding: 10,
-        borderRadius: "25%",
+        width:
+            "15%",
+        padding:
+            10,
+        borderRadius:
+            "25%",
     },
     titulo: {
         fontSize: 30,
-        fontWeight: "bold",
+        fontWeight:
+            "bold",
     },
     descricao: {
         fontSize: 15,
-        color: "gray",
+        color:
+            "gray",
     },
     textoRodape: {
         fontSize: 10,
-        textAlign: "center",
-        color: "gray",
+        textAlign:
+            "center",
+        color:
+            "gray",
     }
 });

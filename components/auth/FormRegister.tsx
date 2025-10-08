@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Text, TextInput, View, StyleSheet} from "react-native";
+import {Text, TextInput, View, StyleSheet, TouchableOpacity} from "react-native";
 
 export function FormRegister() {
     const [nome, setNome] = useState<string>("");
@@ -23,6 +23,10 @@ export function FormRegister() {
 
         setDataNascimento(formatted);
     };
+
+    const realizarRegistro = () => {
+        console.log("registro")
+    }
 
     return (
         <View style={styles.container}>
@@ -107,6 +111,10 @@ export function FormRegister() {
                     maxLength={10}
                 />
             </View>
+
+            <TouchableOpacity style={styles.btnEntrar} onPress={realizarRegistro}>
+                <Text style={styles.btnText}>Registrar</Text>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -147,5 +155,18 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: "#333",
         minWidth: '100%'
+    },
+    btnEntrar: {
+        borderRadius: 15,
+        paddingVertical: 12,
+        paddingHorizontal: 40,
+        backgroundColor: "purple",
+        alignItems: "center",
+        marginTop: 10,
+    },
+    btnText: {
+        fontWeight: "bold",
+        fontSize: 18,
+        color: "white",
     }
 })
