@@ -1,8 +1,8 @@
 import HomeScreen from "@/app/pages/HomeScreen";
 import {PaperProvider} from "react-native-paper";
 import LoginScreen from "@/app/pages/LoginScreen";
-import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import UserRegisterScreen from "@/app/pages/UserRegisterScreen";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
 

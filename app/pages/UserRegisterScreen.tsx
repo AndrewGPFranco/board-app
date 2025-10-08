@@ -1,3 +1,4 @@
+import React from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import {FormRegister} from "@/components/auth/FormRegister";
 import {KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View} from "react-native";
@@ -23,9 +24,7 @@ export default function UserRegisterScreen() {
                     <Text style={styles.descricao}>Preencha os dados para começar</Text>
                 </View>
 
-                <View style={styles.formWrapper}>
-                    <FormRegister/>
-                </View>
+                <FormRegister/>
 
                 <Text style={styles.textoRodape}>
                     Ao criar uma conta, você concorda com nossos{' '}
@@ -79,10 +78,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: "#6B7280",
         textAlign: 'center',
-    },
-    formWrapper: {
-        width: '100%',
-        marginBottom: 10,
     },
     textoRodape: {
         fontSize: 12,

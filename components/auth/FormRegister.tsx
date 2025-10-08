@@ -1,14 +1,32 @@
+import {z} from "zod";
 import React, {useState} from "react";
-import {Text, TextInput, View, StyleSheet, TouchableOpacity} from "react-native";
+import {Router, useRouter} from "expo-router";
+import {Text, TextInput, View, StyleSheet, TouchableOpacity, Alert} from "react-native";
 
 export function FormRegister() {
-    const [nome, setNome] = useState<string>("");
-    const [email, setEmail] = useState<string>("");
-    const [senha, setSenha] = useState<string>("");
-    const [username, setUsername] = useState<string>("");
-    const [nomeCompleto, setNomeCompleto] = useState<string>("");
-    const [dataNascimento, setDataNascimento] = useState<string>("");
-    const [numeroTelefone, setNumeroTelefone] = useState<string>("");
+    const [formData, setFormData] = useState({
+        nome: "", email: "", senha: "", username: "", nomeCompleto: "", dataNascimento: "", numeroTelefone: "",
+    });
+
+    const handleChange = (key: string, value: string) => {
+        setFormData(prev => ({...prev, [key]: value}));
+    };
+
+    const router: Router = useRouter();
+
+    const schema = z.object({
+        nome: z.string()
+            .min(3, "O nome precisa ter pelo menos 3 caracteres")
+            .max(30, "O nome não pode ultrapassar 30 caracteres"),
+        email: z.string().email("O email precisa estar no padrão correto"),
+        senha: z.string().min(8, "A senha precisa ter no mínimo 8 caracteres"),
+        username: z.string()
+            .min(3, "O username precisa ter pelo menos 3 caracteres")
+            .max(20, "O username não pode ultrapassar 20 caracteres"),
+        nomeCompleto: z.string().max(255, "O nome não pode ultrapassar 255 caracteres"),
+        dataNascimento: z.string().max(8, "A data de nascimento informada é inválida"),
+        numeroTelefone: z.string().max(11, "O número de telefone informado é inválido")
+    })
 
     const formatDataNascimento = (text: string) => {
         const cleaned = text.replace(/\D/g, '');
@@ -21,11 +39,28 @@ export function FormRegister() {
         else
             formatted = `${cleaned.slice(0, 2)}/${cleaned.slice(2, 4)}/${cleaned.slice(4, 8)}`;
 
-        setDataNascimento(formatted);
+        handleChange("dataNascimento", formatted);
     };
 
     const realizarRegistro = () => {
-        console.log("registro")
+        const validation = schema.safeParse({
+            nome: formData.nome,
+            email: formData.email,
+            senha: formData.senha,
+            username: formData.username,
+            nomeCompleto: formData.nomeCompleto,
+            dataNascimento: formData.dataNascimento,
+            numeroTelefone: formData.numeroTelefone
+        });
+
+        if (!validation.success) {
+            const firstError = validation.error.errors[0];
+            Alert.alert(firstError.path[0] as string, firstError.message);
+            return;
+        }
+
+
+        router.replace("/pages/LoginScreen");
     }
 
     return (
@@ -34,8 +69,8 @@ export function FormRegister() {
                 <Text style={styles.label}>Nome</Text>
                 <TextInput
                     style={styles.input}
-                    onChangeText={setNome}
-                    value={nome}
+                    onChangeText={(valor) => handleChange("nome", valor)}
+                    value={formData.nome}
                     placeholder="Digite seu nome"
                     autoCapitalize="none"
                     autoComplete="off"
@@ -45,8 +80,8 @@ export function FormRegister() {
                 <Text style={styles.label}>Nome Completo</Text>
                 <TextInput
                     style={styles.input}
-                    onChangeText={setNomeCompleto}
-                    value={nomeCompleto}
+                    onChangeText={(valor) => handleChange("nomeCompleto", valor)}
+                    value={formData.nomeCompleto}
                     placeholder="Digite seu nome completo"
                     autoCapitalize="none"
                     autoComplete="off"
@@ -56,8 +91,8 @@ export function FormRegister() {
                 <Text style={styles.label}>E-mail</Text>
                 <TextInput
                     style={styles.input}
-                    onChangeText={setEmail}
-                    value={email}
+                    onChangeText={(valor) => handleChange("email", valor)}
+                    value={formData.email}
                     placeholder="Digite seu e-mail"
                     keyboardType="email-address"
                     autoCapitalize="none"
@@ -68,19 +103,20 @@ export function FormRegister() {
                 <Text style={styles.label}>Senha</Text>
                 <TextInput
                     style={styles.input}
-                    onChangeText={setSenha}
-                    value={senha}
+                    onChangeText={(valor) => handleChange("senha", valor)}
+                    value={formData.senha}
                     placeholder="Digite sua senha"
                     autoCapitalize="none"
                     autoComplete="off"
+                    secureTextEntry
                 />
             </View>
             <View>
                 <Text style={styles.label}>Username</Text>
                 <TextInput
                     style={styles.input}
-                    onChangeText={setUsername}
-                    value={username}
+                    onChangeText={(valor) => handleChange("username", valor)}
+                    value={formData.username}
                     placeholder="Digite seu username"
                     autoCapitalize="none"
                     autoComplete="off"
@@ -90,8 +126,8 @@ export function FormRegister() {
                 <Text style={styles.label}>Número de Telefone</Text>
                 <TextInput
                     style={styles.input}
-                    onChangeText={setNumeroTelefone}
-                    value={numeroTelefone}
+                    onChangeText={(valor) => handleChange("numeroTelefone", valor)}
+                    value={formData.numeroTelefone}
                     placeholder="(XX) XXXXX-XXXX"
                     autoCapitalize="none"
                     keyboardType="numeric"
@@ -105,7 +141,7 @@ export function FormRegister() {
                     style={styles.input}
                     placeholder="DD/MM/AAAA"
                     placeholderTextColor="#999"
-                    value={dataNascimento}
+                    value={formData.dataNascimento}
                     onChangeText={formatDataNascimento}
                     keyboardType="numeric"
                     maxLength={10}
