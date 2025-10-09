@@ -105,7 +105,7 @@ export function FormLogin() {
 
             <Text style={styles.aviso}>Não tem uma conta? <Text
                 onPress={() => router.push("/pages/UserRegisterScreen")}
-                style={styles.falsoLink}>Cadastre-se</Text>
+                style={styles.linkRota}>Cadastre-se</Text>
             </Text>
         </View>
     );
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: "white",
     },
-    falsoLink: {
+    linkRota: {
         color: 'purple',
         fontWeight: "bold",
     },

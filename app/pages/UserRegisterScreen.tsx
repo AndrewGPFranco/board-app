@@ -39,7 +39,9 @@ export default function UserRegisterScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FAFAFA',
+        justifyContent: "center",
+        alignItems: "center",
+        paddingHorizontal: 20
     },
     scrollContent: {
         flexGrow: 1,

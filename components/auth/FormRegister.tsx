@@ -1,31 +1,43 @@
 import {z} from "zod";
 import React, {useState} from "react";
+import useAuthStore from "@/stores/authStore";
 import {Router, useRouter} from "expo-router";
-import {Text, TextInput, View, StyleSheet, TouchableOpacity, Alert} from "react-native";
+import {Dialog, Portal} from "react-native-paper";
+import IAuthStore from "@/stores/types/IAuthStore";
+import {Text, TextInput, View, StyleSheet, TouchableOpacity} from "react-native";
 
 export function FormRegister() {
     const [formData, setFormData] = useState({
         nome: "", email: "", senha: "", username: "", nomeCompleto: "", dataNascimento: "", numeroTelefone: "",
     });
 
+    const hideDialog: () => void = () => setVisible(false);
+    const [visible, setVisible] = React.useState<boolean>(false);
+    const [mensagemRegister, setmensagemRegister] = React.useState<string>("");
+
     const handleChange = (key: string, value: string) => {
         setFormData(prev => ({...prev, [key]: value}));
     };
 
     const router: Router = useRouter();
+    const authStore: IAuthStore = useAuthStore();
 
     const schema = z.object({
         nome: z.string()
             .min(3, "O nome precisa ter pelo menos 3 caracteres")
             .max(30, "O nome não pode ultrapassar 30 caracteres"),
+        nomeCompleto: z.string()
+            .min(3, "O nome completo precisa ter pelo menos 3 caracteres") // ADICIONE ISSO
+            .max(255, "O nome não pode ultrapassar 255 caracteres"),
         email: z.string().email("O email precisa estar no padrão correto"),
         senha: z.string().min(8, "A senha precisa ter no mínimo 8 caracteres"),
         username: z.string()
             .min(3, "O username precisa ter pelo menos 3 caracteres")
             .max(20, "O username não pode ultrapassar 20 caracteres"),
-        nomeCompleto: z.string().max(255, "O nome não pode ultrapassar 255 caracteres"),
-        dataNascimento: z.string().max(8, "A data de nascimento informada é inválida"),
-        numeroTelefone: z.string().max(11, "O número de telefone informado é inválido")
+        numeroTelefone: z.string()
+            .length(11, "O número de telefone deve ter exatamente 11 dígitos"), // MUDE ISSO
+        dataNascimento: z.string()
+            .length(10, "A data de nascimento deve estar no formato DD/MM/AAAA") // MUDE ISSO
     })
 
     const formatDataNascimento = (text: string) => {
@@ -42,7 +54,7 @@ export function FormRegister() {
         handleChange("dataNascimento", formatted);
     };
 
-    const realizarRegistro = () => {
+    const realizarRegistro = async () => {
         const validation = schema.safeParse({
             nome: formData.nome,
             email: formData.email,
@@ -55,16 +67,64 @@ export function FormRegister() {
 
         if (!validation.success) {
             const firstError = validation.error.errors[0];
-            Alert.alert(firstError.path[0] as string, firstError.message);
+            setmensagemRegister(firstError.message);
+            setVisible(true);
             return;
         }
 
+        const response = await authStore.realizarRegistro({
+            nome: formData.nome,
+            email: formData.email,
+            senha: formData.senha,
+            username: formData.username,
+            nomeCompleto: formData.nomeCompleto,
+            dataNascimento: formData.dataNascimento,
+            numeroTelefone: formData.numeroTelefone
+        });
 
-        router.replace("/pages/LoginScreen");
+        if (response.getError()) {
+            setmensagemRegister(String(response.getResponse()));
+            setVisible(true);
+            return;
+        }
+
+        setmensagemRegister(String(response.getResponse()));
+        setVisible(true);
+
+        setTimeout(() => {
+            router.replace("/pages/LoginScreen");
+        }, 3000);
     }
 
     return (
         <View style={styles.container}>
+            <Portal>
+                <Dialog
+                    visible={visible}
+                    onDismiss={hideDialog}
+                    style={{
+                        backgroundColor: '#707070',
+                        borderRadius: 12,
+                    }}
+                >
+                    <Dialog.Content
+                        style={{
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontSize: 18,
+                                color: 'white',
+                                textAlign: 'center',
+                            }}
+                        >
+                            {mensagemRegister}
+                        </Text>
+                    </Dialog.Content>
+                </Dialog>
+            </Portal>
+
             <View>
                 <Text style={styles.label}>Nome</Text>
                 <TextInput
@@ -151,6 +211,11 @@ export function FormRegister() {
             <TouchableOpacity style={styles.btnEntrar} onPress={realizarRegistro}>
                 <Text style={styles.btnText}>Registrar</Text>
             </TouchableOpacity>
+
+            <Text style={styles.aviso}>Já tem uma conta? <Text
+                onPress={() => router.push("/pages/LoginScreen")}
+                style={styles.linkRota}>Login</Text>
+            </Text>
         </View>
     )
 }
@@ -204,5 +269,15 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 18,
         color: "white",
+    },
+    linkRota: {
+        color: 'purple',
+        fontWeight: "bold",
+    },
+    aviso: {
+        marginTop: 5,
+        fontSize: 12,
+        color: "gray",
+        textAlign: "center",
     }
 })
