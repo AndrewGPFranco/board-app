@@ -1,6 +1,24 @@
+import {useEffect} from "react";
 import {Text, View} from "react-native";
+import useAuthStore from "@/stores/authStore";
+import {Router, useRouter} from "expo-router";
+import IAuthStore from "@/stores/types/IAuthStore";
 
-export default function HomeScreen() {
+const HomeScreen = () => {
+    const router: Router = useRouter();
+    const authStore: IAuthStore = useAuthStore();
+
+    useEffect(() => {
+        const verificaToken = async (): Promise<boolean> => {
+            return await authStore.verificaTokenValido();
+        };
+
+        verificaToken().then((result: boolean) => {
+            if (!result)
+                router.replace("/pages/LoginScreen");
+        });
+    }, [authStore, router]);
+
     return (
         <View>
             <Text>
@@ -9,3 +27,5 @@ export default function HomeScreen() {
         </View>
     )
 }
+
+export default HomeScreen;
