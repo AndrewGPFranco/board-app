@@ -15,3 +15,23 @@ export interface IDecodeJWT {
     iss: string;
     sub: string;
 }
+
+export interface IBoard {
+    id: string;
+    titulo: string;
+    descricao: string;
+    username: string;
+    createdAt: Date;
+    updatedAt: Date;
+    itensBoard: ItemBoard[];
+}
+
+export interface ItemBoard {
+    id: string;
+    titulo: string;
+    descricao: string;
+    categoria: string;
+    createdAt: Date;
+    updateAt: Date;
+    finalizedA: Date;
+}

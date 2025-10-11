@@ -4,7 +4,7 @@ import {jwtDecode} from "jwt-decode";
 import {api} from "@/network/AxiosInstance";
 import {parseDateBR} from "@/utils/DataUtils";
 import IAuthStore from "@/stores/types/IAuthStore";
-import ResponseAPI from "@/stores/types/ResponseAPI";
+import ResponseAPI from "@/utils/ResponseAPI";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {IDecodeJWT, IUserRegister} from "@/types/interfaces/InterfaceUtils";
 

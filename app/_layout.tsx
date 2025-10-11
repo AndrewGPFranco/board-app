@@ -6,8 +6,9 @@ export default function RootLayout() {
         <PaperProvider>
             <Stack screenOptions={{headerShown: false}}>
                 <Stack.Screen name="index"/>
-                <Stack.Screen name="pages/LoginScreen"/>
                 <Stack.Screen name="pages/HomeScreen"/>
+                <Stack.Screen name="pages/BoardScreen"/>
+                <Stack.Screen name="pages/LoginScreen"/>
                 <Stack.Screen name="pages/UserRegisterScreen"/>
             </Stack>
         </PaperProvider>

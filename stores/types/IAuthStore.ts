@@ -1,4 +1,4 @@
-import ResponseAPI from "@/stores/types/ResponseAPI";
+import ResponseAPI from "@/utils/ResponseAPI";
 import {IUserRegister} from "@/types/interfaces/InterfaceUtils";
 
 interface IAuthStore {

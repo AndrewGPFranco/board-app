@@ -2,9 +2,9 @@ import {z} from "zod";
 import React, {useState} from "react";
 import {Router, useRouter} from "expo-router";
 import useAuthStore from "@/stores/authStore";
+import ResponseAPI from "@/utils/ResponseAPI";
 import {Dialog, Portal} from "react-native-paper";
 import IAuthStore from "@/stores/types/IAuthStore";
-import ResponseAPI from "@/stores/types/ResponseAPI";
 import {Text, TextInput, View, StyleSheet, TouchableOpacity} from "react-native";
 
 export function FormLogin() {
