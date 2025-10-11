@@ -23,6 +23,7 @@ export interface IBoard {
     username: string;
     createdAt: Date;
     updatedAt: Date;
+    pathImagem: string;
     itensBoard: ItemBoard[];
 }
 

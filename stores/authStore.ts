@@ -2,7 +2,7 @@ import {create} from "zustand";
 import {AxiosError} from "axios";
 import {jwtDecode} from "jwt-decode";
 import {api} from "@/network/AxiosInstance";
-import {parseDateBR} from "@/utils/DataUtils";
+import {parseDateFromStringToDateBR} from "@/utils/DataUtils";
 import IAuthStore from "@/stores/types/IAuthStore";
 import ResponseAPI from "@/utils/ResponseAPI";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -25,7 +25,7 @@ const useAuthStore = create<IAuthStore>(() => ({
     },
     async realizarRegistro(input: IUserRegister): Promise<ResponseAPI<string>> {
         try {
-            const dataNascimento: Date | null = parseDateBR(input.dataNascimento);
+            const dataNascimento: Date | null = parseDateFromStringToDateBR(input.dataNascimento);
             if (!dataNascimento)
                 return new ResponseAPI(true, 'Data de nascimento inválida!');
 

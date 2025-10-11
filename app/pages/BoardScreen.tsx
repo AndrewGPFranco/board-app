@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import Menu from "@/components/global/Menu";
-import {StyleSheet, View} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
 import useBoardStore from "@/stores/boardStore";
 import IBoardStore from "@/stores/types/IBoardStore";
 import {ListBoards} from "@/components/board/ListBoards";
@@ -23,6 +23,10 @@ const BoardScreen = () => {
     return (
         <View style={styles.container}>
             <View style={styles.content}>
+                <View>
+                    <Text style={styles.titulo}>Quadros</Text>
+                </View>
+
                 <ListBoards
                     boards={boards}
                 />
@@ -38,9 +42,13 @@ const styles = StyleSheet.create({
     },
     content: {
         flex: 1,
-        justifyContent: "center",
+        justifyContent: "space-around",
         alignItems: "center",
     },
+    titulo: {
+        fontSize: 25,
+        fontWeight: "bold",
+    }
 });
 
 export default BoardScreen;

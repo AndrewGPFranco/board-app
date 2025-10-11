@@ -7,8 +7,13 @@ const Menu = () => {
 
     const mainMenuItems = [
         {
+            label: "Home",
+            icon: "home-sharp",
+            onPress: () => router.push("/pages/HomeScreen"),
+        },
+        {
             label: "Boards",
-            icon: "albums-outline",
+            icon: "albums-sharp",
             onPress: () => router.push("/pages/BoardScreen"),
         }
     ];
@@ -17,7 +22,7 @@ const Menu = () => {
         <View style={styles.bottomMenu}>
             {mainMenuItems.map((item, index) => (
                 <TouchableOpacity key={index} style={styles.menuButton} onPress={item.onPress}>
-                    <Ionicons name={item.icon as any} size={20} color="black"/>
+                    <Ionicons name={item.icon as any} size={25} color="black"/>
                 </TouchableOpacity>
             ))}
         </View>
@@ -31,9 +36,9 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-around",
         alignItems: "center",
-        paddingVertical: 20,
+        paddingVertical: 15,
         borderTopWidth: 1,
-        borderTopColor: '#707070'
+        borderTopColor: '#a1a1a1'
     },
     menuButton: {
         alignItems: "center",
