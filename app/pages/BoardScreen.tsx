@@ -1,10 +1,11 @@
 import {useEffect, useState} from "react";
 import Menu from "@/components/global/Menu";
-import {StyleSheet, Text, View} from "react-native";
 import useBoardStore from "@/stores/boardStore";
+import {StyleSheet, Text, View} from "react-native";
 import IBoardStore from "@/stores/types/IBoardStore";
 import {ListBoards} from "@/components/board/ListBoards";
 import {IBoard} from "@/types/interfaces/InterfaceUtils";
+import {SafeAreaView} from "react-native-safe-area-context";
 
 const BoardScreen = () => {
     const boardStore: IBoardStore = useBoardStore();
@@ -21,10 +22,11 @@ const BoardScreen = () => {
     }, [boardStore]);
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <View style={styles.content}>
-                <View>
-                    <Text style={styles.titulo}>Quadros</Text>
+                <View style={styles.header}>
+                    <Text style={styles.titulo}>Meus Quadros</Text>
+                    <Text style={styles.subtitle}>{boards.length} quadro{boards.length !== 1 ? 's' : ''}</Text>
                 </View>
 
                 <ListBoards
@@ -32,22 +34,34 @@ const BoardScreen = () => {
                 />
             </View>
             <Menu/>
-        </View>
+        </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: "#f8f9fa",
     },
     content: {
         flex: 1,
-        justifyContent: "space-around",
-        alignItems: "center",
+        paddingHorizontal: 16,
+        paddingTop: 20,
+    },
+    header: {
+        marginBottom: 24,
     },
     titulo: {
-        fontSize: 25,
-        fontWeight: "bold",
+        fontSize: 28,
+        fontWeight: "700",
+        color: "#1a1a1a",
+        letterSpacing: -0.5,
+    },
+    subtitle: {
+        fontSize: 14,
+        color: "#999",
+        marginTop: 4,
+        fontWeight: "500",
     }
 });
 

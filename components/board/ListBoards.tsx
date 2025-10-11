@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import {IBoard} from "@/types/interfaces/InterfaceUtils";
 import {parseDateFromDateToStringBR} from "@/utils/DataUtils";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {Image, StyleSheet, Text, View, ActivityIndicator} from "react-native";
+import {Image, StyleSheet, Text, View, ActivityIndicator, FlatList, Pressable} from "react-native";
 
 type ListBoardsProps = {
     boards: IBoard[];
@@ -48,11 +48,13 @@ export function ListBoards({boards}: ListBoardsProps) {
     const renderizaImagemCapa = (board: IBoard) => {
         if (loadingImages[board.id]) {
             return (
-                <ActivityIndicator size="small"/>
+                <View style={styles.avatar}>
+                    <ActivityIndicator size="small" color="#5c6bc0"/>
+                </View>
             )
         } else if (board.pathImagem === null) {
             return (
-                <View style={styles.containerAvatarComLetra}>
+                <View style={[styles.avatar, styles.avatarComLetra]}>
                     <Text style={styles.avatarLetra}>
                         {board.titulo.at(0)?.toUpperCase()}
                     </Text>
@@ -71,83 +73,94 @@ export function ListBoards({boards}: ListBoardsProps) {
     }
 
     return (
-        <View style={styles.container}>
-            {boards.map((board: IBoard) => (
-                <View style={styles.item} key={board.id}>
+        <FlatList
+            data={boards}
+            keyExtractor={(item) => item.id}
+            scrollEnabled={false}
+            renderItem={({item: board}) => (
+                <Pressable style={({pressed}) => [styles.item, pressed && styles.itemPressed]}>
                     <View style={styles.containerImagem}>
                         {renderizaImagemCapa(board)}
                     </View>
                     <View style={styles.containerInfos}>
-                        <View>
-                            <Text style={styles.titulo}>{board.titulo}</Text>
-                            <Text style={styles.descricao}>{board.descricao}</Text>
+                        <View style={styles.textContainer}>
+                            <Text style={styles.titulo} numberOfLines={1}>{board.titulo}</Text>
+                            <Text style={styles.descricao} numberOfLines={2}>{board.descricao}</Text>
                         </View>
                         <View>
                             {renderDataCriacao(board.createdAt)}
                         </View>
                     </View>
-                </View>
-            ))}
-        </View>
+                </Pressable>
+            )}
+            contentContainerStyle={styles.container}
+        />
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 10
+        paddingBottom: 20,
+        width: "100%",
     },
     item: {
         flexDirection: "row",
-        gap: 10,
-        borderWidth: 1,
-        paddingHorizontal: 15,
-        paddingVertical: 5,
-        borderColor: "gray",
-        minWidth: "90%",
-        maxWidth: "90%",
-        borderRadius: 10,
+        gap: 12,
+        backgroundColor: "#fff",
+        paddingHorizontal: 14,
+        paddingVertical: 12,
+        borderRadius: 12,
+        marginBottom: 10,
+        shadowColor: "#000",
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: 0.08,
+        shadowRadius: 4,
+        elevation: 3,
+    },
+    itemPressed: {
+        opacity: 0.7,
+        backgroundColor: "#f5f5f5",
     },
     containerImagem: {
         alignItems: "center",
         justifyContent: "center",
     },
     avatar: {
-        width: 35,
-        height: 35
+        width: 48,
+        height: 48,
+        borderRadius: 10,
+    },
+    avatarComLetra: {
+        backgroundColor: "#5c6bc0",
+        alignItems: "center",
+        justifyContent: "center",
     },
     titulo: {
-        fontSize: 15,
-        fontWeight: "bold",
-        flexShrink: 1,
+        fontSize: 16,
+        fontWeight: "600",
+        color: "#1a1a1a",
     },
     descricao: {
-        fontSize: 12,
-        color: "gray",
-        flexShrink: 1,
+        fontSize: 13,
+        color: "#666",
+        marginTop: 4,
+        lineHeight: 18,
     },
     containerInfos: {
         flex: 1,
-        flexDirection: "column",
-        flexWrap: "wrap",
+        justifyContent: "space-between",
+    },
+    textContainer: {
+        flex: 1,
     },
     data: {
-        fontSize: 13,
-        color: "black",
-    },
-    containerAvatarComLetra: {
-        backgroundColor: "#fff",
-        borderRadius: 50,
-        alignItems: "center",
-        justifyContent: "center",
-        width: 35,
-        height: 35,
+        fontSize: 12,
+        color: "#999",
+        fontWeight: "500",
     },
     avatarLetra: {
-        fontWeight: "bold",
-        fontSize: 16,
-        color: "black",
+        fontWeight: "700",
+        fontSize: 18,
+        color: "#fff",
     }
 });
