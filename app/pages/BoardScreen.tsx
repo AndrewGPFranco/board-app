@@ -1,5 +1,6 @@
-import {ScrollView} from "react-native";
 import {useEffect, useState} from "react";
+import Menu from "@/components/global/Menu";
+import {StyleSheet, View} from "react-native";
 import useBoardStore from "@/stores/boardStore";
 import IBoardStore from "@/stores/types/IBoardStore";
 import {ListBoards} from "@/components/board/ListBoards";
@@ -20,14 +21,26 @@ const BoardScreen = () => {
     }, [boardStore]);
 
     return (
-        <>
-            <ScrollView>
+        <View style={styles.container}>
+            <View style={styles.content}>
                 <ListBoards
                     boards={boards}
                 />
-            </ScrollView>
-        </>
+            </View>
+            <Menu/>
+        </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    content: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+});
 
 export default BoardScreen;

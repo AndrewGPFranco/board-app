@@ -1,8 +1,9 @@
 import {useEffect} from "react";
+import Menu from "@/components/global/Menu";
 import useAuthStore from "@/stores/authStore";
 import {Router, useRouter} from "expo-router";
 import IAuthStore from "@/stores/types/IAuthStore";
-import {Text, TouchableOpacity, View} from "react-native";
+import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
 const HomeScreen = () => {
     const router: Router = useRouter();
@@ -20,15 +21,29 @@ const HomeScreen = () => {
     }, [authStore, router]);
 
     return (
-        <View>
-            <Text>
-                Bem vindo ao APP de gerenciamento!
-            </Text>
-            <TouchableOpacity onPress={() => router.push("/pages/BoardScreen")}>
-                Boards
-            </TouchableOpacity>
+        <View style={styles.container}>
+            <View style={styles.content}>
+                <Text>Bem-vindo ao APP de gerenciamento!</Text>
+
+                <TouchableOpacity onPress={() => router.push("/pages/BoardScreen")}>
+                    <Text>Boards</Text>
+                </TouchableOpacity>
+
+            </View>
+            <Menu/>
         </View>
-    )
+    );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    content: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+});
 
 export default HomeScreen;
