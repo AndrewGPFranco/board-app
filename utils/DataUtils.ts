@@ -1,4 +1,4 @@
-export function parseDateBR(str: string | Date): Date | null {
+export function parseDateFromStringToDateBR(str: string | Date): Date | null {
     if (typeof str === "string") {
         const match = str.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
         if (match) {
@@ -15,4 +15,26 @@ export function parseDateBR(str: string | Date): Date | null {
     }
 
     return str as Date;
+}
+
+export function parseDateFromDateToStringBR(data: Date | string): string {
+    if (!data) return "-";
+
+    let dateObj: Date;
+
+    if (typeof data === "string") {
+        if (data.includes("T"))
+            dateObj = new Date(data);
+        else {
+            const [ano, mes, dia] = data.split("-");
+            dateObj = new Date(parseInt(ano), parseInt(mes) - 1, parseInt(dia));
+        }
+    } else
+        dateObj = data;
+
+    const dia: string = dateObj.getDate().toString().padStart(2, "0");
+    const mes: string = (dateObj.getMonth() + 1).toString().padStart(2, "0");
+    const ano: number = dateObj.getFullYear();
+
+    return `${dia}/${mes}/${ano}`;
 }
